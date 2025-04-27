@@ -1,16 +1,11 @@
-import Contact from "./Contact";
-import Footer from "./Footer";
-
-
-
+import Home from './Home';
 
 function App() {
   return (
     <div className="App">
      
-<Contact />
-<Footer />
 
+<Home />
 
     </div>
   );
