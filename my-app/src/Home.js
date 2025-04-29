@@ -1,7 +1,7 @@
 import { Box, Typography, Grid, Paper, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import mainImage from './images/image-1.jpeg';
-import Contact from './Contact'
+
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -63,7 +63,7 @@ export default function Home() {
       </Typography>
 
 
-<Contact />
+
 
 
     </>
