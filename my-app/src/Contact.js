@@ -5,55 +5,72 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import axios from 'axios';
+import {getCSRFToken} from './../utils/csrf'
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
 
-const [formData, setFormData]=useState({
-  name: '',
-  email:'',
-  subject:'',
-  message:'',
-});
+  const csrfToken=getCSRFToken()
 
-
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
     console.log(formData);
-  
+
+    axios.post(
+      'http://127.0.0.1:8000/contact/inquiry/',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        withCredentials: true,
+      }
+    )
+      .then(response => {
+        console.log('Message sent:', response.data);
+        setSuccess(true);
+        setError(''); // Clear any previous error message
+      })
+      .catch(error => {
+        console.error('Error sending message:', error.response?.data || error.message);
+        setError('There was an issue submitting your form. Please try again.');
+        setSuccess(false); // Reset success state on error
+      });
   }
 
-
-function handleChange(e){
-  const {name, value}=e.target;
-  setFormData(prev=>({
-    ...prev,
-    [name]:value
-  }));
-}
-
-
-
-
-
-
-
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
 
   return (
-
     <Box
       sx={{
-        width: '100vw',
-        minHeight: '100vh',
+        width: '100vw',  // Full width
+        minHeight: '100vh', // Full height
         backgroundColor: '#f5f5f5',
         p: 2,
         boxSizing: 'border-box',
       }}
     >
       {/* Contact Info + Form */}
-      <Grid container spacing={2} mb={5}>
+      <Grid container spacing={2} mb={5} sx={{ height: '100%' }}>
         {/* Contact Info */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={6} sx={{ height: '100%' }}>
           <Paper
             elevation={2}
             sx={{
@@ -93,7 +110,7 @@ function handleChange(e){
         </Grid>
 
         {/* Form */}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} sm={6} sx={{ height: '100%' }}>
           <Paper
             elevation={2}
             sx={{
@@ -110,28 +127,35 @@ function handleChange(e){
               noValidate
               autoComplete="off"
             >
-              <TextField 
-              label="Name" 
-              type="text" 
-              variant="standard"
-              onChange={handleChange} 
-              required />
-
-              <TextField 
-              label="Your Email" 
-              type="email" 
-              variant="standard"
-              onChange={handleChange}
-               required />
-
-              <TextField 
-              label="Subject" 
-              type="text" 
-              variant="standard" 
-              onChange={handleChange}
-              required />
+              <TextField
+                name="name"
+                label="Name"
+                type="text"
+                variant="standard"
+                onChange={handleChange}
+                required
+              />
 
               <TextField
+                name="email"
+                label="Your Email"
+                type="email"
+                variant="standard"
+                onChange={handleChange}
+                required
+              />
+
+              <TextField
+                name="subject"
+                label="Subject"
+                type="text"
+                variant="standard"
+                onChange={handleChange}
+                required
+              />
+
+              <TextField
+                name="message"
                 label="Message"
                 type="text"
                 multiline
@@ -141,40 +165,29 @@ function handleChange(e){
                 required
               />
 
-              <Button 
-              variant="contained" 
-              sx={{ mt: 2 }}
-              onClick={handleSubmit}
+              <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                onClick={handleSubmit}
               >
                 Submit
               </Button>
+
+              {/* Success or Error Message */}
+              {success && (
+                <Typography variant="body1" color="green" sx={{ mt: 2 }}>
+                  Your message has been sent successfully!
+                </Typography>
+              )}
+              {error && (
+                <Typography variant="body1" color="red" sx={{ mt: 2 }}>
+                  {error}
+                </Typography>
+              )}
             </Box>
           </Paper>
         </Grid>
       </Grid>
-
-      {/* Full-width Map */}
-      <Box
-        sx={{
-          width: '100%',
-          height: '400px',
-          mt: 4,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <iframe
-          title="Google Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.018434173158!2d36.95675657588786!3d-1.147314335491925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f47b787a14d2f%3A0x4eb5e7db3fc573d9!2sRuiru%20Main%20Stage!5e0!3m2!1sen!2ske!4v1745954763189!5m2!1sen!2ske"
-          width="100%"
-          height="450px"
-          style={{ border: 0 , marginTop: 2}}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </Box>
     </Box>
   );
 }

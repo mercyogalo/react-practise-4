@@ -3,6 +3,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serialize import ContactSerializer
 from django.core.mail import send_mail
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+
+
+
+
+def get_csrf_token(request):
+    csrf_token=get_token(request)
+    return JsonResponse({'csrf_token': csrf_token})
+
+
+
+
+
+
 
 
 class ContactFormAPIView(APIView):
