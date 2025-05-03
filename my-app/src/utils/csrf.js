@@ -5,3 +5,5 @@ const getCSRFToken = () => {
     return null;
   };
   
+
+export default getCSRFToken
