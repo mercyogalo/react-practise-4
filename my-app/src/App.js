@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-
+import Navbar from './Navbar'
 import React from 'react';
 import Home from './Home';
 import Contact from './Contact'
@@ -9,10 +9,15 @@ function App() {
     <div className="App">
 
 <Router>
+
+<Navbar />
+
+
   <Routes>
 
-    <Route path='/' element={<Contact />} />
-    <Route path='/home' element={<Home />} />
+  <Route path='/' element={<Home />} />
+  <Route path='/contact' element={<Contact />} />
+    
 
   </Routes>
 </Router>
