@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import axios from 'axios';
-import {getCSRFToken} from './../utils/csrf'
+import {getCSRFToken} from './utils/csrf'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
