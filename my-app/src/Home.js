@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import mainImage from './images/image-1.jpeg';
 
 
+
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   textAlign: 'center',
@@ -63,7 +64,7 @@ export default function Home() {
       </Typography>
 
 
-
+      
 
 
     </>

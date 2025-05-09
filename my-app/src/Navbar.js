@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import { Link, useLocation } from 'react-router-dom';
 
+
 export default function NavTabs() {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -19,6 +20,8 @@ export default function NavTabs() {
       <Link to="/contact">Contact</Link>
 
       </Tabs>
+
+     
 
 
     </Box>
