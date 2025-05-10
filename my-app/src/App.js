@@ -3,7 +3,8 @@ import Navbar from './Navbar'
 import React from 'react';
 import Home from './Home';
 import Contact from './Contact';
-import Footer from './Footer'
+import Footer from './Footer';
+import About from './About'
 
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
   <Routes>
 
   <Route path='/' element={<Home />} />
+  <Route path='/about' element={<About />} />
   <Route path='/contact' element={<Contact />} />
+  
     
 
   </Routes>

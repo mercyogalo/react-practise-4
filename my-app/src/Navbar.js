@@ -8,7 +8,7 @@ export default function NavTabs() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const paths = ['/', '/contact'];
+  const paths = ['/', '/about', '/contact'];
   const currentTab = paths.indexOf(currentPath);
 
   return (
@@ -17,6 +17,7 @@ export default function NavTabs() {
       <Tabs value={currentTab} aria-label="nav tabs example">
 
       <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
       <Link to="/contact">Contact</Link>
 
       </Tabs>
